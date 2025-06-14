@@ -2,19 +2,24 @@ import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
 import { CreateDeliveryRequest, CreateDeliveryResponse, DeliveryStatusRequest, DeliveryStatusResponse } from "../domain/dto.ts";
-import { Delivery, Provider, Status } from "../domain/entity.ts";
+import { Delivery, Status } from "../domain/entity.ts";
 import { DeliveryRepository } from "../domain/repository.ts";
+import { Provider } from "../../providers/domain/entity.ts"
+import { GenericProviderRepository } from "../../providers/domain/repository.ts";
 
 export default class DeliveryControler {
-  constructor(private readonly repository: DeliveryRepository) {}
+  constructor(
+    private readonly repository: DeliveryRepository,
+    private readonly provider: GenericProviderRepository
+  ) {}
 
   async create(req: Request<{}, {}, CreateDeliveryRequest>, res: Response<CreateDeliveryResponse>) {
     const providers = Object.keys(Provider)
-    const provider = providers[Math.floor(Math.random() * providers.length)]
+    const provider = providers[Math.floor(Math.random() * providers.length)] as Provider
     const delivery: Delivery = {
       name: req.body.name,
-      provider: provider as Provider,
-      label: "test",
+      provider: provider,
+      label: await this.provider.generateLabel(provider),
       status: Status.CREATED
     }
 

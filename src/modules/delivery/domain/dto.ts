@@ -1,4 +1,5 @@
-import { Provider, Status } from "./entity.ts"
+import { Status } from "./entity.ts"
+import { Provider } from "../../providers/domain/entity.ts"
 
 export interface CreateDeliveryRequest {
   name: string

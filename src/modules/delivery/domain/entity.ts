@@ -1,7 +1,4 @@
-export enum Provider {
-  NRW = "NRW",
-  TLS = "TLS"
-}
+import { Provider } from "../../providers/domain/entity.ts"
 
 export enum Status {
   CREATED = "CREATED",
