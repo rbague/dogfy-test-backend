@@ -1,10 +1,13 @@
 import { Router } from "express";
 import type { Request, Response } from "express"
 
-const router = Router()
+import deliveryRouter from "../../../modules/delivery/infrastructure/http/routes.ts";
 
+const router = Router()
 router.get("/ping", (req: Request, res: Response) => {
   res.status(200).send("pong")
 })
+
+router.use("/deliveries", deliveryRouter)
 
 export default router;
