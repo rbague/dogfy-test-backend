@@ -1,6 +1,15 @@
 import { Status } from "./entity.ts"
 import { Provider } from "../../providers/domain/entity.ts"
 
+export interface ListDeliveryResponse {
+  deliveries: {
+    id: string,
+    name: string,
+    provider: Provider
+    label: string
+  }[]
+}
+
 export interface CreateDeliveryRequest {
   name: string
 }

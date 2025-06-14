@@ -5,6 +5,13 @@ import { Delivery } from "../domain/entity.ts";
 import { DeliveryRepository } from "../domain/repository.ts"
 
 export default class extends MongoRepository implements DeliveryRepository {
+  list(): Promise<Delivery[]> {
+    return new Promise(resolve => {
+      const documents = this.collection.find<Delivery>({}).toArray()
+      resolve(documents)
+    })
+  }
+
   get(id: string): Promise<Delivery> {
     return new Promise(resolve => {
       this.collection.findOne<Delivery>({ _id: new ObjectId(id) }).then(response => {

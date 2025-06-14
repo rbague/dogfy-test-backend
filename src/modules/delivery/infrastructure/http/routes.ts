@@ -10,6 +10,7 @@ const provider = new ProviderRepository()
 const controller = new DeliveryController(repository, provider)
 const router = Router()
 
+router.get("/", (req, res) => controller.list(req, res))
 router.post("/", (req, res) => controller.create(req, res))
 router.get("/:id/status", (req, res) => controller.status(req, res))
 

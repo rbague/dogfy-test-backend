@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
-import { CreateDeliveryRequest, CreateDeliveryResponse, DeliveryStatusRequest, DeliveryStatusResponse } from "../domain/dto.ts";
+import { CreateDeliveryRequest, CreateDeliveryResponse, DeliveryStatusRequest, DeliveryStatusResponse, ListDeliveryResponse } from "../domain/dto.ts";
 import { Delivery, Status } from "../domain/entity.ts";
 import { DeliveryRepository } from "../domain/repository.ts";
 import { Provider } from "../../providers/domain/entity.ts"
@@ -12,6 +12,18 @@ export default class DeliveryControler {
     private readonly repository: DeliveryRepository,
     private readonly provider: GenericProviderRepository
   ) {}
+
+  async list(req: Request, res: Response<ListDeliveryResponse>) {
+    const response = await this.repository.list()
+    res.status(StatusCodes.OK).json({
+      deliveries: response.map(it => ({
+        id: it.id || "",
+        name: it.name,
+        provider: it.provider,
+        label: it.label
+      }))
+    })
+  }
 
   async create(req: Request<{}, {}, CreateDeliveryRequest>, res: Response<CreateDeliveryResponse>) {
     const providers = Object.keys(Provider)
