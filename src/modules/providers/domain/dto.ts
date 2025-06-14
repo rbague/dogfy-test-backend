@@ -1,6 +1,6 @@
-import { Label } from "./entity.ts";
+import { Label, Status } from "./entity.ts";
 
 export interface TLSWebhookRequest {
   label: Label,
-  status: "RECEIVED" | "PROCESSING" | "TRANSIT" | "DELIVERED"
+  status: Status
 }

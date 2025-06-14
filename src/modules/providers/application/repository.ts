@@ -1,7 +1,7 @@
 import crypto from "node:crypto"
 
-import { Provider, Label } from "../domain/entity.ts";
-import { GenericProviderRepository, ProviderRepository } from "../domain/repository.ts";
+import { Provider, Status, Label } from "../domain/entity.ts";
+import { GenericProviderRepository, ProviderRepository, StatusRepository } from "../domain/repository.ts";
 
 export default class implements GenericProviderRepository {
   private readonly nrw: ProviderRepository;
@@ -22,10 +22,15 @@ export default class implements GenericProviderRepository {
   }
 }
 
-export class NRWRespository implements ProviderRepository {
+export class NRWRespository implements ProviderRepository, StatusRepository {
   generateLabel(): Promise<Label> {
     const str = crypto.randomBytes(8).toString("hex");
     return Promise.resolve(str)
+  }
+  getStatus(label: Label): Promise<Status> {
+    const statuses = Object.keys(Status)
+    const status = statuses[Math.floor(Math.random() * statuses.length)] as Status
+    return Promise.resolve(status)
   }
 }
 

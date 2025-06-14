@@ -17,6 +17,18 @@ export default class extends MongoRepository implements DeliveryRepository {
       resolve(documents)
     })
   }
+  filter(query: object): Promise<Delivery[]> {
+    return new Promise(resolve => {
+      const documents = this.collection.find(query).map<Delivery>(doc => ({
+          id: doc._id.toString(),
+          name: doc.name,
+          provider: doc.provider,
+          status: doc.status,
+          label: doc.label,
+      })).toArray()
+      resolve(documents)
+    })
+  }
   get(id: string): Promise<Delivery> {
     return new Promise(resolve => {
       this.collection.findOne({ _id: new ObjectId(id) }).then(response => {

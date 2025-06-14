@@ -4,3 +4,10 @@ export enum Provider {
 }
 
 export type Label = string
+
+export enum Status {
+  RECEIVED = "RECEIVED",
+  PROCESSING = "PROCESSING",
+  TRANSIT = "TRANSIT",
+  DELIVERED = "DELIVERED",
+}
