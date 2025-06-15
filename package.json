@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "tsc && node dist/index.js",
     "dev:schedule": "tsc && node dist/schedule.js",
+    "test": "jest --randomize --testRegex tests/**",
     "build": "tsc",
     "server": "node dist/index.js",
     "schedule": "node dist/schedule.js"
@@ -15,7 +16,10 @@
   },
   "devDependencies": {
     "@types/express": "^5.0.3",
+    "@types/jest": "^29.5.14",
     "@types/node": "^24.0.1",
+    "jest": "^30.0.0",
+    "ts-jest": "^29.4.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   },

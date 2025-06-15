@@ -12,7 +12,7 @@ export class NRWDeliveryStatusUpdate implements UseCase {
 
   async execute() {
     const deliveries = await this.deliveryRepository.filter({ provider: Provider.NRW, status: { "$ne": Status.FINISHED }})
-    deliveries.forEach(async delivery => {
+    for (const delivery of deliveries) {
       const status = await this.statusRepository.getStatus(delivery.label)
       switch (status) {
         case "RECEIVED":
@@ -32,6 +32,6 @@ export class NRWDeliveryStatusUpdate implements UseCase {
       }
 
       await this.deliveryRepository.update(delivery)
-    });
+    }
   }
 }
