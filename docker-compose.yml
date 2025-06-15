@@ -1,0 +1,29 @@
+services:
+  backend:
+    build: .
+    command: npm run server
+    restart: always
+    healthcheck:
+      test: curl --fail http://localhost:3000/ping || exit 1
+    ports:
+      - 8000:3000
+    depends_on:
+      - mongodb
+  schedule:
+    build: .
+    command: npm run schedule
+    restart: always
+    depends_on:
+      - mongodb
+  mongodb:
+    image: mongo:8.0.10-noble
+    restart: always
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+    environment:
+      - MONGO_INITDB_DATABASE=test
+    volumes:
+      - mongodb:/data/db
+
+volumes:
+  mongodb:

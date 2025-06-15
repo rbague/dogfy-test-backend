@@ -1,0 +1,21 @@
+services:
+  backend:
+    build:
+      context: .
+      target: dev-stage
+    command: npm run dev
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app
+    env_file:
+      - .env.sample
+  schedule:
+    build:
+      context: .
+      target: dev-stage
+    command: npm run dev:schedule
+    volumes:
+      - .:/app
+    env_file:
+      - .env.sample

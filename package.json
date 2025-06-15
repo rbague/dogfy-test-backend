@@ -5,7 +5,10 @@
   "main": "src/index.ts",
   "scripts": {
     "dev": "tsc && node dist/index.js",
-    "dev:schedule": "tsc && node dist/schedule.js"
+    "dev:schedule": "tsc && node dist/schedule.js",
+    "build": "tsc",
+    "server": "node dist/index.js",
+    "schedule": "node dist/schedule.js"
   },
   "engines": {
     "node": ">=22.16.0"
