@@ -5,12 +5,23 @@ import { StatusCodes } from "http-status-codes";
 import { DeliveryRepository } from "../../delivery/domain/repository.ts";
 import { Status } from "../../delivery/domain/entity.ts";
 import { Provider } from "../domain/entity.ts";
+import Joi from "joi";
 
 export class TLSWebhookController {
   constructor(private readonly deliveries: DeliveryRepository) {}
 
   async process(req: Request<{}, {}, TLSWebhookRequest>, res: Response) {
-    const { label, status } = req.body
+    const schema = Joi.object({
+      label: Joi.string().required().trim().empty(),
+      status: Joi.string().required().trim().empty().valid(...Object.values(Status))
+    }).strict()
+    const { error, value } = schema.validate(req.body)
+    if (error) {
+      res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ error: error.toString() })
+      return
+    }
+
+    const { label, status } = value
     const delivery = await this.deliveries.find({ label, provider: Provider.TLS })
     switch (status) {
       case "RECEIVED":
