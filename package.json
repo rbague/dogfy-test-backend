@@ -4,12 +4,12 @@
   "private": true,
   "main": "src/index.ts",
   "scripts": {
-    "dev": "tsc && node dist/index.js",
-    "dev:schedule": "tsc && node dist/schedule.js",
+    "dev": "tsc && node dist/src/index.js",
+    "dev:schedule": "tsc && node dist/src/schedule.js",
     "test": "jest --randomize --testRegex tests/**",
     "build": "tsc",
-    "server": "node dist/index.js",
-    "schedule": "node dist/schedule.js"
+    "server": "node dist/src/index.js",
+    "schedule": "node dist/src/schedule.js"
   },
   "engines": {
     "node": ">=22.16.0"
